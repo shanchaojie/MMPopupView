@@ -42,8 +42,15 @@ UIGestureRecognizerDelegate
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
-        window = [[MMPopupWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        window.rootViewController = [UIViewController new];
+        if (@available(ios 13.0, *)) {
+            UIWindowScene *windowScene = (UIWindowScene *)[[[UIApplication sharedApplication] connectedScenes] allObjects].firstObject;
+            window = [[MMPopupWindow alloc] initWithWindowScene:windowScene];
+            window.frame = windowScene.coordinateSpace.bounds;
+            window.rootViewController = [UIViewController new];
+           }else {
+               window = [[MMPopupWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+               window.rootViewController = [UIViewController new];
+           }
     });
     
     return window;
