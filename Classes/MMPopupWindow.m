@@ -44,7 +44,8 @@ UIGestureRecognizerDelegate
     dispatch_once(&onceToken, ^{
         if (@available(ios 13.0, *)) {
             UIWindowScene *windowScene = (UIWindowScene *)[[[UIApplication sharedApplication] connectedScenes] allObjects].firstObject;
-            window = [[MMPopupWindow alloc] initWithWindowScene:windowScene];
+            window = [[MMPopupWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            window.windowScene = windowScene;
             window.frame = windowScene.coordinateSpace.bounds;
             window.rootViewController = [UIViewController new];
            }else {
